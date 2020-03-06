@@ -12,13 +12,17 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case CAMBIAR_NOMBRE: return { ...state, nombre: action.nuevoNombre }
-        case 'CAMBIAR_APELLIDO': return { ...state, apellido: action.nuevoApellido }
-        case 'CARGAR_USUARIOS':return { ...state, users: action.payload }
+        case CAMBIAR_NOMBRE:
+            return { ...state, nombre: action.nuevoNombre }
+        case 'CAMBIAR_APELLIDO':
+            return { ...state, apellido: action.nuevoApellido }
+        case 'CARGAR_USUARIOS':
+            return { ...state, users: action.payload }
         case CHANGE_AMOUNT: return {...state, amount:action.value};
         case OBTAIN_ALL_PAY_TYPES: return {...state, payTypes:action.payload};
         case CHANGE_PAY_TYPE: return {...state, payType:action.value};
-        default: return initialState;
+        default:
+            return initialState;
     }
 };
 

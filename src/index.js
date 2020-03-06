@@ -11,7 +11,7 @@ import Usuarios from './redux/Usuarios';
 
 ReactDOM.render(
     <Provider store={store}>
-        <Usuarios />
+        <App/>
     </Provider >
     , document.getElementById('root'));
 
