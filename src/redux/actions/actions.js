@@ -1,28 +1,6 @@
 import axios from 'axios';
-import { CAMBIAR_NOMBRE } from './types';
 import {  OBTAIN_ALL_PAY_TYPES, CHANGE_PAY_TYPE } from '../types/addDonationTypes';
 
-export const cambiarNombre = (nuevoNombre) => {
-    return {
-        type: CAMBIAR_NOMBRE,
-        nuevoNombre
-    }
-}
-
-export const cambiarApellido = (nuevoApellido) => {
-    return {
-        type: 'CAMBIAR_APELLIDO',
-        nuevoApellido
-    }
-}
-
-export const cargarUsuarios = () => async (dispatch) => {
-    const response = await axios.get('https://jsonplaceholder.typicode.com/users');
-    return dispatch({
-        type: 'CARGAR_USUARIOS',
-        payload: response.data
-    })
-}
 
 export const obtainPayTypes = () => async (dispatch) => {
     try{
@@ -39,9 +17,10 @@ export const obtainPayTypes = () => async (dispatch) => {
     }
 }
 
-export const changePayType = (value) => {
-    return {
+export const changePayType = (value) => (dispatch) =>{
+    dispatch({
         type: CHANGE_PAY_TYPE, 
         value
-    }
+    })
+    
 }

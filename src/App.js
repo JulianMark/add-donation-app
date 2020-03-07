@@ -1,95 +1,111 @@
 import React, { useEffect } from 'react';
-import './App.css';
-import { cambiarNombre, cambiarApellido, obtainPayTypes, changePayType } from './redux/actions/actions';
 import { useSelector, useDispatch} from 'react-redux';
-import Usuarios from './redux/Usuarios';
-import { Grid, TextField, Typography }from '@material-ui/core';
-import {useState} from 'react';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 
-const theme = createMuiTheme({
-   overrides: {
-     PrivateNotchedOutline: {
-       legend: {
-         width: '265px !important',
-       }
-     }
-   },
- });
+import './App.css';
 
-function App() {
+import TelegramIcon from '@material-ui/icons/Telegram';
+import { TextField, Button}from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-  const { nombre, apellido, payTypes } = useSelector((state) => state);
+import { obtainPayTypes, changePayType } from './redux/actions/actions';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: 200,
+    },
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+}));
+
+const App = () => {
+
+  const { amount, dni, payTypes,payType } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const [payType, setPayType] = useState ('');
-   useEffect(()=> {
-    dispatch(
-      obtainPayTypes()
-    );
-  },[dispatch]) 
 
-  const onChangePayType = (e) => {
-    setPayType(e.target.value);
-  }
-  const onChange = (event) => {
-    dispatch(
-      cambiarNombre(event.target.value)
-    );
+  useEffect(
+    ()=> {
+      dispatch(
+        obtainPayTypes()    
+      );
+  },[dispatch]);
+
+  const onAmountChange = (e) => {
+    //TODO
   }
 
-  const onApellidoChange = (event) => {
-    dispatch(cambiarApellido(event.target.value));
+  const onDniChange = (e) => {
+    //TODO
   }
+
+  const onPayTypeChange = (e) => {
+    dispatch(changePayType(e.target.value));
+  }
+
+  const onSubmit = (e) => {
+    //TODO
+  }
+
+  const classes = useStyles();
+
   return (
     <div className="App">
-      <input
-        id="nombre"
-        type="text"
-        onChange={onChange}
-      />
-      <p>{nombre}</p>
-      <input
-        id="apellido"
-        type="text"
-        onChange={onApellidoChange}
-      />
-      <p>{apellido}</p>
-      <ThemeProvider theme={theme} >
-        <Grid>
-            <TextField
-                id="outlined-select-currency-native"
-                select
-                label="Tipo de pago"
-                value={payType}
-                onChange={onChangePayType}
-                SelectProps={{
-                  native: true,
-                }}
+      <form className={classes.root} noValidate autoComplete="off" onSubmit={onSubmit}>
+        <div>
+            <TextField 
+                label="Monto de donacion"
+                type="number"
                 variant="outlined"
-              >
-                {payTypes.map(option => (
-                  <option key={option.id} value={option.description}>
-                    {option.description}
-                  </option>
-                ))}
-              </TextField>
-              <Typography variant="subtitle2"></Typography>
-         </Grid>
-         <Grid>
-                            <TextField
-                              fullWidth
-                              label="Como gostaria de ser chamad  o ou chamada?"
-                              name="name"
-                              value={"hello"}
-                              variant="outlined"
-                            />
-                            <Typography variant="subtitle2">
-                            </Typography>
-  
-      </Grid>
-      </ThemeProvider>
-      
+                name="amount"
+                onChange= {onAmountChange}
+                value= {amount}
+            />
+        </div>
+        <div>
+            <TextField
+            label="dni del donante"
+            type="number"
+            variant= "outlined" 
+            name="dni"
+            onChange= {onDniChange}
+            value= {dni}
+            />
+        </div>
+        <div>
+          <TextField
+              id="outlined-select-currency-native"
+              select
+              label="Tipo de pago"
+              value={payType}
+              onChange={onPayTypeChange}
+              SelectProps={{
+                native: true,
+              }}
+              variant="outlined"
+            >
+              {payTypes.map(option => (
+                <option key={option.id} value={option.id}>
+                  {option.description}
+                </option>
+              ))}
+            </TextField>
+        <div>
+            <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            endIcon={<TelegramIcon/>}
+            >
+            Enviar
+            </Button>
+        </div>       
+      </div>
+    </form>
+          
     </div>
   );
 }
