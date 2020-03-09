@@ -82,6 +82,7 @@ const App = () => {
       "name": name,
       "payType": payType
     }
+    dispatch(reloadFrom());
     dispatch(addDonation(request));
   }
 
@@ -133,12 +134,12 @@ const App = () => {
     }
   }
 
-  /* const disabledButton = () => {
+  const disabledButton = () => {
     if(!amount || !name || !lastname || !age || !dni ){
       return true;
     }
     return false;
-  } */
+  } 
 
   const putContent = () => {
     if (loading) {
@@ -260,7 +261,7 @@ const App = () => {
         <Grid item xs={12}>
           <Button 
             className={ classes.submit}
-            disabled={true}
+            disabled={disabledButton()}
             fullWidth
             type="submit"
             variant="contained"

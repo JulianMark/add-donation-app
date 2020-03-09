@@ -94,6 +94,10 @@ export const addDonation = (request) => async (dispatch) => {
             type: ADD_DONATION,
             payload:response
         }) 
+        dispatch({
+            type: RELOAD
+        })
+        //asdasdasjkldh
     } catch (e) {
         dispatch({
             type:ERROR,
